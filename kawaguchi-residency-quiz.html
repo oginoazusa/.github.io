@@ -59,9 +59,9 @@
 </head>
 <body>
   <div class="wrap">
-    <h1 class="ttl">川口市在住年数あてゲーム</h1>
+    <h1 class="ttl">川口市 在住年数あてゲーム</h1>
     <p class="sub">来た時に〇〇はあったか？の質問に答えて、在住歴を当てます<br>ご出身の方は、生まれた時に読み替えて回答してみてください</p>
-    <p class="sub" style="text-align:right">last update: 2026/05/10 ver1.0.1&#x3000;<a href="https://lit.link/ognazs" target="_blank" rel="noopener noreferrer" style="color:#1D9E75">作者はコチラ</a></p>
+    <p class="sub" style="text-align:right">last update: 2026/05/10 ver1.0.2&#x3000;<a href="https://lit.link/ognazs" target="_blank" rel="noopener noreferrer" style="color:#1D9E75">作者はコチラ</a></p>
     <div class="pbar"><div class="pfill" id="pf"></div></div>
     <div id="ct"></div>
   </div>
@@ -70,7 +70,7 @@
     const NOW = 2026;
 
     const QS = [
-      { id:'sr',       type:'yn', name:'埼玉高速鉄道線（SR）',                 year:2001, hint:'赤羽岩淵?浦和美園を結ぶ地下鉄路線（2001年開業）' },
+      { id:'sr',       type:'yn', name:'埼玉高速鉄道線（SR）',                 year:2001, hint:'赤羽岩淵～浦和美園を結ぶ地下鉄路線（2001年開業）' },
       { id:'iina',     type:'yn', name:'イイナパーク川口（赤山歴史自然公園）', year:2018, hint:'2018年4月一部開園、2022年4月に川口ハイウェイオアシスが開業し全面開園' },
       { id:'hoken',    type:'yn', name:'川口市保健所',                          year:2018, hint:'2018年（平成30年）4月1日、県保健所から独立して設置' },
       { id:'elza',     type:'yn', name:'エルザタワー55',                        year:1999, hint:'55階建て高層マンション（1999年竣工）' },
@@ -79,13 +79,13 @@
       { id:'higashi',  type:'yn', name:'JR武蔵野線 東川口駅',                  year:1973, hint:'1973年（昭和48年）4月、JR武蔵野線の開通とともに開業' },
       { id:'green',    type:'yn', name:'川口市立グリーンセンター',              year:1967, hint:'1967年（昭和42年）11月「グリーンセンター川口市立花木植物園」として開園。現在も営業中' },
       { id:'pool',     type:'cl', name:'グリーンセンターの流水プール場',        open:1979, close:2021, hint:'1979年7月開設・2020年6月休止・2021年11月廃止', before:'いいえ、まだできていなかった（1979年より前）', after:'いいえ、すでに廃止されていた（2021年より後）' },
-      { id:'hato',     type:'cl', name:'鳩ヶ谷市',                             open:1958, close:2011, hint:'川口市に隣接していた市（1958年市制?2011年川口市と合併）', before:'いいえ、まだ市になっていなかった（1958年より前）', after:'いいえ、すでに川口市と合併していた（2011年より後）' },
+      { id:'hato',     type:'cl', name:'鳩ヶ谷市',                             open:1958, close:2011, hint:'川口市に隣接していた市（1958年市制～2011年川口市と合併）', before:'いいえ、まだ市になっていなかった（1958年より前）', after:'いいえ、すでに川口市と合併していた（2011年より後）' },
       { id:'chika',    type:'cl', name:'川口駅東口地下商店街',                 open:1970, close:1992, hint:'1970年整備・1992年閉鎖（現在は地下自転車駐車場として再利用）', before:'いいえ、まだできていなかった（1970年より前）', after:'いいえ、すでに閉鎖されていた（1992年より後）' },
-      { id:'bull',     type:'cl', name:'ブルドッグソース鳩ヶ谷工場',          open:1935, close:2023, hint:'1935年6月新設、88年間ソースを作り続けた工場（?2023年9月生産終了）', before:'いいえ、まだ工場がなかった（1935年より前）', after:'いいえ、すでに生産終了していた（2023年より後）' },
+      { id:'bull',     type:'cl', name:'ブルドッグソース鳩ヶ谷工場',          open:1935, close:2023, hint:'1935年6月新設、88年間ソースを作り続けた工場（～2023年9月生産終了）', before:'いいえ、まだ工場がなかった（1935年より前）', after:'いいえ、すでに生産終了していた（2023年より後）' },
       { id:'juni',     type:'jn', name:'川口市十二月田町',                     close:1969, hint:'昭和44年（1969年）の住居表示変更により消滅した地名' },
-      { id:'iryo',     type:'mc', hint:'川口市民病院（本町）：1951年?1994年5月 → 移転・改称し「川口市立医療センター」（新井宿）：1994年5月?' },
+      { id:'iryo',     type:'mc', hint:'川口市民病院（本町）：1951年～1994年5月 → 移転・改称し「川口市立医療センター」（新井宿）：1994年5月～' },
       { id:'sogou',    type:'mc', hint:'1991年10月「川口そごう」開店 → 2002年「そごう川口店」に改称 → 2021年2月閉店 → 2025年5月「ららテラス川口」開業' },
-      { id:'sap',      type:'mc', hint:'サッポロビール埼玉工場：?2003年9月閉鎖 → アリオ川口（跡地）：2005年11月開業' },
+      { id:'sap',      type:'mc', hint:'サッポロビール埼玉工場：～2003年9月閉鎖 → アリオ川口（跡地）：2005年11月開業' },
     ];
 
     const QM = {};
@@ -285,7 +285,7 @@
         h = `<div class="card">
           <div class="ql">質問 ${idx}</div>
           <div class="qt">川口市に来た時、市の病院はどの状態でしたか？</div>
-          <div class="note">「川口市民病院」（本町）：1951年?1994年5月 → 移転・改称し「川口市立医療センター」（新井宿）：1994年5月?</div>
+          <div class="note">「川口市民病院」（本町）：1951年～1994年5月 → 移転・改称し「川口市立医療センター」（新井宿）：1994年5月～</div>
         </div>
         <div class="c1">
           <button class="btn" onclick="doMC('iryo','shimin')">本町に「川口市民病院」があった</button>
@@ -311,7 +311,7 @@
         h = `<div class="card">
           <div class="ql">質問 ${idx}</div>
           <div class="qt">川口市に来た時、サッポロビール工場・アリオ川口の場所はどの状態でしたか？</div>
-          <div class="note">サッポロビール埼玉工場：?2003年9月閉鎖 → アリオ川口（跡地）：2005年11月開業</div>
+          <div class="note">サッポロビール埼玉工場：～2003年9月閉鎖 → アリオ川口（跡地）：2005年11月開業</div>
         </div>
         <div class="c1">
           <button class="btn" onclick="doMC('sap','fac')">サッポロビール工場があった</button>
@@ -327,16 +327,43 @@
     function showResult() {
       currentQ = null;
       document.getElementById('pf').style.width = '100%';
-      const arr = est(), yrs = NOW - arr;
       const rows = answers.map(a =>
         `<div class="evr"><span>${a.label}</span><span class="${a.yes?'ty':'tn'}">${a.tag}</span></div>`
       ).join('');
 
-      document.getElementById('ct').innerHTML = `
-        <div class="rc">
+      let resultHtml = '';
+
+      if (answers.length === 0) {
+        // 0問：メッセージのみ
+        resultHtml = `
+          <div class="ry" style="font-size:36px;color:#aaa">？</div>
+          <div class="rl" style="margin-top:12px">回答がなかったため推定できませんでした</div>
+          <div class="rr">「わからない・スキップ」以外の回答があると推定できます</div>`;
+
+      } else if (answers.length <= 2) {
+        // 1～2問：範囲表示
+        const arrLo = NOW - hi, arrHi = NOW - lo;
+        const midYrs = NOW - est();
+        resultHtml = `
+          <div class="rl">川口市在住歴（推定範囲）</div>
+          <div class="ry" style="font-size:38px">約${arrLo}～${arrHi}年</div>
+          <div class="rr">${lo}～${hi}年頃から在住と推定（回答数が少ないため幅があります）</div>`;
+
+      } else {
+        // 3問以上：単一値＋範囲を併記
+        const arr = est(), yrs = NOW - arr;
+        const arrLo = NOW - hi, arrHi = NOW - lo;
+        const rangeStr = arrLo === arrHi ? '' : `<div class="rr">推定範囲：約${arrLo}～${arrHi}年（${lo}～${hi}年頃から在住）</div>`;
+        resultHtml = `
           <div class="rl">川口市在住歴</div>
           <div class="ry">約${yrs}年</div>
           <div class="rr">${arr}年頃から在住と推定</div>
+          ${rangeStr}`;
+      }
+
+      document.getElementById('ct').innerHTML = `
+        <div class="rc">
+          ${resultHtml}
           ${rows ? `<div class="evbox"><div class="evt">回答の根拠</div>${rows}</div>` : ''}
           <div class="rbtns">
             <button class="rbtn" onclick="goBackResult()">← 修正して再計算</button>
