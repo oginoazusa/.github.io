@@ -1,505 +1,320 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>川口市在住年数あてゲーム</title>
+  <title>川口市 在住年数あてゲーム</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
-      background: #f5f5f0;
-      color: #1a1a1a;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 2rem 1rem;
-    }
-
-    .wrap {
-      width: 100%;
-      max-width: 560px;
-    }
-
-    .ttl {
-      font-size: 20px;
-      font-weight: 600;
-      color: #1a1a1a;
-      margin-bottom: 4px;
-    }
-
-    .sub {
-      font-size: 13px;
-      color: #666;
-      margin-bottom: 1.25rem;
-    }
-
-    .pbar {
-      height: 4px;
-      background: #ddd;
-      border-radius: 2px;
-      margin-bottom: 1.5rem;
-      overflow: hidden;
-    }
-
-    .pfill {
-      height: 100%;
-      background: #1D9E75;
-      border-radius: 2px;
-      transition: width .4s ease;
-    }
-
-    .card {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 12px;
-      padding: 1.25rem;
-      margin-bottom: 1rem;
-    }
-
-    .ql {
-      font-size: 12px;
-      color: #999;
-      margin-bottom: 8px;
-    }
-
-    .qt {
-      font-size: 15px;
-      color: #1a1a1a;
-      line-height: 1.6;
-    }
-
-    .qn {
-      font-size: 19px;
-      font-weight: 600;
-      color: #1a1a1a;
-      margin: 6px 0 4px;
-    }
-
-    .qh {
-      font-size: 12px;
-      color: #888;
-      margin-top: 6px;
-      line-height: 1.5;
-    }
-
-    .note {
-      font-size: 12px;
-      color: #085041;
-      background: #E1F5EE;
-      border-radius: 8px;
-      padding: 8px 12px;
-      margin-top: 10px;
-      line-height: 1.6;
-    }
-
-    .c2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 1rem;
-    }
-
-    .c1 {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-      margin-top: 1rem;
-    }
-
-    .btn {
-      background: #f7f7f5;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 11px 14px;
-      font-size: 14px;
-      color: #1a1a1a;
-      cursor: pointer;
-      text-align: left;
-      transition: background .15s, border-color .15s;
-      line-height: 1.5;
-      font-family: inherit;
-    }
-
-    .btn:hover {
-      background: #efefeb;
-      border-color: #bbb;
-    }
-
-    .btn:active {
-      transform: scale(0.99);
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-    }
-
-    .tbtn {
-      font-size: 12px;
-      color: #999;
-      background: none;
-      border: none;
-      cursor: pointer;
-      text-decoration: underline;
-      font-family: inherit;
-      padding: 4px 0;
-    }
-
-    .tbtn:disabled {
-      opacity: .3;
-      cursor: default;
-      text-decoration: none;
-    }
-
-    .tbtn:not(:disabled):hover {
-      color: #555;
-    }
-
-    /* 結果カード */
-    .rc {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 12px;
-      padding: 1.75rem 1.5rem;
-      text-align: center;
-    }
-
-    .ry {
-      font-size: 56px;
-      font-weight: 700;
-      color: #1D9E75;
-      line-height: 1;
-      margin: 8px 0;
-    }
-
-    .rl {
-      font-size: 14px;
-      color: #666;
-    }
-
-    .rr {
-      font-size: 13px;
-      color: #999;
-      margin-top: 4px;
-    }
-
-    .evbox {
-      margin-top: 1.25rem;
-      border-top: 1px solid #eee;
-      padding-top: 1rem;
-      text-align: left;
-    }
-
-    .evt {
-      font-size: 12px;
-      color: #999;
-      margin-bottom: 6px;
-    }
-
-    .evr {
-      font-size: 13px;
-      color: #555;
-      padding: 6px 0;
-      border-bottom: 1px solid #f0f0f0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; background: #f5f5f0; color: #1a1a1a; min-height: 100vh; display: flex; justify-content: center; padding: 2rem 1rem; }
+    .wrap { width: 100%; max-width: 560px; }
+    .ttl { font-size: 20px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+    .sub { font-size: 13px; color: #666; margin-bottom: 1.25rem; }
+    .pbar { height: 4px; background: #ddd; border-radius: 2px; margin-bottom: 1.5rem; overflow: hidden; }
+    .pfill { height: 100%; background: #1D9E75; border-radius: 2px; transition: width .4s ease; }
+    .card { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+    .ql { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .qt { font-size: 15px; color: #1a1a1a; line-height: 1.6; }
+    .qn { font-size: 19px; font-weight: 600; color: #1a1a1a; margin: 6px 0 4px; }
+    .qh { font-size: 12px; color: #888; margin-top: 6px; line-height: 1.5; }
+    .note { font-size: 12px; color: #085041; background: #E1F5EE; border-radius: 8px; padding: 8px 12px; margin-top: 10px; line-height: 1.6; }
+    .c2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 1rem; }
+    .c1 { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 1rem; }
+    .btn { background: #f7f7f5; border: 1px solid #ddd; border-radius: 8px; padding: 11px 14px; font-size: 14px; color: #1a1a1a; cursor: pointer; text-align: left; transition: background .15s, border-color .15s; line-height: 1.5; font-family: inherit; }
+    .btn:hover { background: #efefeb; border-color: #bbb; }
+    .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+    .tbtn { font-size: 12px; color: #999; background: none; border: none; cursor: pointer; text-decoration: underline; font-family: inherit; padding: 4px 0; }
+    .tbtn:disabled { opacity: .3; cursor: default; text-decoration: none; }
+    .tbtn:not(:disabled):hover { color: #555; }
+    .rc { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.75rem 1.5rem; text-align: center; }
+    .ry { font-size: 56px; font-weight: 700; color: #1D9E75; line-height: 1; margin: 8px 0; }
+    .rl { font-size: 14px; color: #666; }
+    .rr { font-size: 13px; color: #999; margin-top: 4px; }
+    .evbox { margin-top: 1.25rem; border-top: 1px solid #eee; padding-top: 1rem; text-align: left; }
+    .evt { font-size: 12px; color: #999; margin-bottom: 6px; }
+    .evr { font-size: 13px; color: #555; padding: 6px 0; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     .evr span:first-child { flex: 1; }
-
     .ty { color: #0F6E56; font-size: 12px; white-space: nowrap; font-weight: 500; }
     .tn { color: #A32D2D; font-size: 12px; white-space: nowrap; font-weight: 500; }
-
-    .rbtns {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin-top: 1.25rem;
-      flex-wrap: wrap;
-    }
-
-    .rbtn {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 10px 18px;
-      font-size: 14px;
-      color: #1a1a1a;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background .15s;
-    }
-
+    .rbtns { display: flex; gap: 8px; justify-content: center; margin-top: 1.25rem; flex-wrap: wrap; }
+    .rbtn { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 10px 18px; font-size: 14px; color: #1a1a1a; cursor: pointer; font-family: inherit; transition: background .15s; }
     .rbtn:hover { background: #f5f5f0; }
-
-    /* 評価カード */
-    .rating-card {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-top: 1rem;
-    }
-
-    .rating-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: #1a1a1a;
-      margin-bottom: 1.25rem;
-      text-align: center;
-    }
-
+    .rating-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; margin-top: 1rem; }
+    .rating-title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 1.25rem; text-align: center; }
     .rating-row { margin-bottom: 1.25rem; }
-
-    .rating-label {
-      font-size: 13px;
-      color: #555;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .rating-val {
-      font-size: 22px;
-      font-weight: 600;
-      color: #1D9E75;
-    }
-
-    input[type=range] {
-      width: 100%;
-      accent-color: #1D9E75;
-      cursor: pointer;
-    }
-
-    .slider-ends {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: #aaa;
-      margin-top: 4px;
-    }
-
-    .rating-submit {
-      width: 100%;
-      margin-top: .5rem;
-      background: #1D9E75;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 14px;
-      font-size: 14px;
-      color: #fff;
-      cursor: pointer;
-      font-weight: 600;
-      font-family: inherit;
-      transition: opacity .15s;
-    }
-
+    .rating-label { font-size: 13px; color: #555; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .rating-val { font-size: 22px; font-weight: 600; color: #1D9E75; }
+    input[type=range] { width: 100%; accent-color: #1D9E75; cursor: pointer; }
+    .slider-ends { display: flex; justify-content: space-between; font-size: 11px; color: #aaa; margin-top: 4px; }
+    .rating-submit { width: 100%; margin-top: .5rem; background: #1D9E75; border: none; border-radius: 8px; padding: 12px 14px; font-size: 14px; color: #fff; cursor: pointer; font-weight: 600; font-family: inherit; transition: opacity .15s; }
     .rating-submit:hover { opacity: .85; }
-
     .rating-done { text-align: center; padding: 1rem 0; }
-
-    .rating-scores {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin: 12px 0;
-    }
-
-    .score-badge {
-      background: #f7f7f5;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 10px 20px;
-      text-align: center;
-    }
-
+    .rating-scores { display: flex; gap: 12px; justify-content: center; margin: 12px 0; }
+    .score-badge { background: #f7f7f5; border: 1px solid #e0e0e0; border-radius: 8px; padding: 10px 20px; text-align: center; }
     .score-badge .sv { font-size: 24px; font-weight: 700; color: #1D9E75; }
     .score-badge .sl { font-size: 11px; color: #999; margin-top: 2px; }
-
-    .rating-done-msg {
-      font-size: 14px;
-      color: #555;
-      line-height: 1.7;
-    }
-
-    /* レスポンシブ */
-    @media (max-width: 480px) {
-      .c2 { grid-template-columns: 1fr; }
-      .ry { font-size: 48px; }
-    }
+    .rating-done-msg { font-size: 14px; color: #555; line-height: 1.7; }
+    @media (max-width: 480px) { .c2 { grid-template-columns: 1fr; } .ry { font-size: 48px; } }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1 class="ttl">川口市在住年数あてゲーム</h1>
-    <p class="sub">来た時に〇〇はあった？最大10問で在住歴を推定します</p>
+    <h1 class="ttl">川口市 在住年数あてゲーム</h1>
+    <p class="sub">来た時に〇〇はあったか？の質問に答えて、在住歴を当てます</p>
     <div class="pbar"><div class="pfill" id="pf"></div></div>
     <div id="ct"></div>
   </div>
 
   <script>
-    const NOW = 2026, MAX = 10;
+    const NOW = 2026;
 
     const QS = [
-      { id: 'sr',    type: 'yn', name: '埼玉高速鉄道線（SR）',                  year: 2001, hint: '赤羽岩淵～浦和美園を結ぶ地下鉄路線（2001年開業）' },
-      { id: 'iina',  type: 'yn', name: 'イイナパーク川口（赤山歴史自然公園）',   year: 2018, hint: '2018年4月一部開園（フワフワドームや歴史自然資料館など）、2022年4月に川口ハイウェイオアシスが開業し全面開園' },
-      { id: 'hoken', type: 'yn', name: '川口市保健所',                           year: 2018, hint: '2018年（平成30年）4月1日、県保健所から独立して設置' },
-      { id: 'elza',  type: 'yn', name: 'エルザタワー55',                         year: 1999, hint: '55階建て高層マンション（1999年竣工）' },
-      { id: 'lilia', type: 'yn', name: '川口総合文化センター・リリア',           year: 1990, hint: '川口駅西口の複合文化施設（1990年開館）' },
-      { id: 'hato',  type: 'cl', name: '鳩ヶ谷市',                              open: 1958, close: 2011, hint: '川口市に隣接していた市（1958年市制～2011年川口市と合併）' },
-      { id: 'chika', type: 'cl', name: '川口駅東口地下商店街',                  open: 1970, close: 1992, hint: '1970年整備・1992年閉鎖（現在は地下自転車駐車場として再利用）' },
-      { id: 'bull',  type: 'cl', name: 'ブルドッグソース鳩ヶ谷工場',           open: 1935, close: 2023, hint: '1935年6月新設、88年間ソースを作り続けた工場（2023年9月生産終了）' },
-      { id: 'green', type: 'yn', name: '川口市立グリーンセンター',               year: 1967, hint: '1967年（昭和42年）11月「グリーンセンター川口市立花木植物園」として開園。現在も営業中' },
-      { id: 'iryo',  type: 'mc', hint: '川口市民病院（本町）：1951年～1994年5月 → 移転・改称し「川口市立医療センター」（新井宿）：1994年5月～' },
-      { id: 'sogou', type: 'mc', hint: '1991年10月「川口そごう」開店 → 2002年「そごう川口店」に改称 → 2021年2月閉店 → 2025年5月「ららテラス川口」開業' },
-      { id: 'sap',   type: 'mc', hint: 'サッポロビール埼玉工場：～2003年9月閉鎖 → アリオ川口（跡地）：2005年11月開業' },
+      { id:'sr',       type:'yn', name:'埼玉高速鉄道線（SR）',                 year:2001, hint:'赤羽岩淵?浦和美園を結ぶ地下鉄路線（2001年開業）' },
+      { id:'iina',     type:'yn', name:'イイナパーク川口（赤山歴史自然公園）', year:2018, hint:'2018年4月一部開園、2022年4月に川口ハイウェイオアシスが開業し全面開園' },
+      { id:'hoken',    type:'yn', name:'川口市保健所',                          year:2018, hint:'2018年（平成30年）4月1日、県保健所から独立して設置' },
+      { id:'elza',     type:'yn', name:'エルザタワー55',                        year:1999, hint:'55階建て高層マンション（1999年竣工）' },
+      { id:'lilia',    type:'yn', name:'川口総合文化センター・リリア',          year:1990, hint:'川口駅西口の複合文化施設（1990年開館）' },
+      { id:'marathon', type:'yn', name:'川口マラソン大会',                      year:1982, hint:'第1回大会が1982年に開催。現在も毎年続いている' },
+      { id:'higashi',  type:'yn', name:'JR武蔵野線 東川口駅',                  year:1973, hint:'1973年（昭和48年）4月、JR武蔵野線の開通とともに開業' },
+      { id:'green',    type:'yn', name:'川口市立グリーンセンター',              year:1967, hint:'1967年（昭和42年）11月「グリーンセンター川口市立花木植物園」として開園。現在も営業中' },
+      { id:'pool',     type:'cl', name:'グリーンセンターの流水プール場',        open:1979, close:2021, hint:'1979年7月開設・2020年6月休止・2021年11月廃止', before:'いいえ、まだできていなかった（1979年より前）', after:'いいえ、すでに廃止されていた（2021年より後）' },
+      { id:'hato',     type:'cl', name:'鳩ヶ谷市',                             open:1958, close:2011, hint:'川口市に隣接していた市（1958年市制?2011年川口市と合併）', before:'いいえ、まだ市になっていなかった（1958年より前）', after:'いいえ、すでに川口市と合併していた（2011年より後）' },
+      { id:'chika',    type:'cl', name:'川口駅東口地下商店街',                 open:1970, close:1992, hint:'1970年整備・1992年閉鎖（現在は地下自転車駐車場として再利用）', before:'いいえ、まだできていなかった（1970年より前）', after:'いいえ、すでに閉鎖されていた（1992年より後）' },
+      { id:'bull',     type:'cl', name:'ブルドッグソース鳩ヶ谷工場',          open:1935, close:2023, hint:'1935年6月新設、88年間ソースを作り続けた工場（?2023年9月生産終了）', before:'いいえ、まだ工場がなかった（1935年より前）', after:'いいえ、すでに生産終了していた（2023年より後）' },
+      { id:'juni',     type:'jn', name:'川口市十二月田町',                     close:1969, hint:'昭和44年（1969年）の住居表示変更により消滅した地名' },
+      { id:'iryo',     type:'mc', hint:'川口市民病院（本町）：1951年?1994年5月 → 移転・改称し「川口市立医療センター」（新井宿）：1994年5月?' },
+      { id:'sogou',    type:'mc', hint:'1991年10月「川口そごう」開店 → 2002年「そごう川口店」に改称 → 2021年2月閉店 → 2025年5月「ららテラス川口」開業' },
+      { id:'sap',      type:'mc', hint:'サッポロビール埼玉工場：?2003年9月閉鎖 → アリオ川口（跡地）：2005年11月開業' },
     ];
 
     const QM = {};
     QS.forEach(q => QM[q.id] = q);
 
-    const ORDER = ['sr', 'iina', 'hoken', 'elza', 'lilia', 'hato', 'iryo', 'sogou', 'sap', 'chika', 'bull', 'green'];
+    const ORDER = ['sr','iina','elza','lilia','marathon','higashi','green','juni','hato','iryo','sogou','sap','hoken','pool','chika','bull'];
 
-    let hist = [], queue = [], answers = [], lo = 1935, hi = NOW - 1;
+    // ============================================================
+    // 【状態管理】
+    //
+    // hist = 回答済みエントリの配列
+    //   hist[i] = { q, lo, hi, answers }
+    //   ※ q は「この回答をした設問」
+    //   ※ lo/hi/answers は「この設問に回答した後」の状態
+    //
+    // remaining = まだ出題していない設問の配列
+    //
+    // currentQ = 現在画面に表示中の設問（未回答）
+    //   ※ remainingには含まれない。回答されたらhistに移動する。
+    //
+    // 【戻る動作】
+    //   1. hist末尾をpopして状態を復元
+    //   2. popしたエントリのqをcurrentQにセットしてrenderQ
+    //   3. remainingは触らない（currentQは既に取り出し済みのため）
+    //
+    // 【回答動作】
+    //   1. currentQに対する回答でlo/hiを更新
+    //   2. { q:currentQ, lo, hi, answers } をhist.push
+    //   3. remainingから次の設問を選んでcurrentQにセットしてrenderQ
+    // ============================================================
 
-    function clamp() { if (lo > hi) lo = hi; }
+    let hist = [];
+    let remaining = [];
+    let currentQ = null;
+    let lo = 1935, hi = NOW - 1;
+    let answers = [];
 
-    function applyYN(q, ex) {
-      ex ? lo = Math.max(lo, q.year) : hi = Math.min(hi, q.year - 1);
-      clamp();
-    }
-
-    function applyCL(q, ex) {
-      if (ex) { lo = Math.max(lo, q.open); hi = Math.min(hi, q.close); }
-      else { lo = Math.max(lo, q.close + 1); }
-      clamp();
-    }
-
+    // --- 判定ロジック ---
+    function applyYN(q, ex)       { if (ex) lo = Math.max(lo, q.year); else hi = Math.min(hi, q.year-1); fixRange(); }
+    function applyCL(q, choice)   { if (choice==='yes') { lo=Math.max(lo,q.open); hi=Math.min(hi,q.close); } else if (choice==='before') { hi=Math.min(hi,q.open-1); } else { lo=Math.max(lo,q.close+1); } fixRange(); }
+    function applyJN(q, ex)       { if (ex) hi=Math.min(hi,q.close); else lo=Math.max(lo,q.close+1); fixRange(); }
     function applyMC(id, sub) {
-      if (id === 'iryo') {
-        if (sub === 'shimin')     { lo = Math.max(lo, 1951); hi = Math.min(hi, 1994); }
-        else if (sub === 'iryo')  { lo = Math.max(lo, 1994); }
-        else                      { hi = Math.min(hi, 1950); }
-      } else if (id === 'sogou') {
-        if (sub === 'kawa')       { lo = Math.max(lo, 1991); hi = Math.min(hi, 2002); }
-        else if (sub === 'sogo')  { lo = Math.max(lo, 2002); hi = Math.min(hi, 2021); }
-        else if (sub === 'lara')  { lo = Math.max(lo, 2025); }
-        else if (sub === 'after') { lo = Math.max(lo, 2021); hi = Math.min(hi, 2025); }
-        else                      { hi = Math.min(hi, 1990); }
-      } else if (id === 'sap') {
-        if (sub === 'fac')        { hi = Math.min(hi, 2003); }
-        else if (sub === 'vac')   { lo = Math.max(lo, 2003); hi = Math.min(hi, 2005); }
-        else                      { lo = Math.max(lo, 2005); }
+      if (id==='iryo') {
+        if (sub==='shimin')     { lo=Math.max(lo,1951); hi=Math.min(hi,1994); }
+        else if (sub==='iryo')  { lo=Math.max(lo,1994); }
+        else                    { hi=Math.min(hi,1950); }
+      } else if (id==='sogou') {
+        if (sub==='kawa')       { lo=Math.max(lo,1991); hi=Math.min(hi,2002); }
+        else if (sub==='sogo')  { lo=Math.max(lo,2002); hi=Math.min(hi,2021); }
+        else if (sub==='lara')  { lo=Math.max(lo,2025); }
+        else if (sub==='after') { lo=Math.max(lo,2021); hi=Math.min(hi,2025); }
+        else                    { hi=Math.min(hi,1990); }
+      } else if (id==='sap') {
+        if (sub==='fac')        { hi=Math.min(hi,2003); }
+        else if (sub==='vac')   { lo=Math.max(lo,2003); hi=Math.min(hi,2005); }
+        else                    { lo=Math.max(lo,2005); }
       }
-      clamp();
+      fixRange();
+    }
+    function fixRange() { if (lo > hi) hi = lo; }
+    function est() { return Math.min(NOW-1, Math.max(1935, Math.round((lo+hi)/2))); }
+
+    // --- スキップ・収束判定 ---
+    function isUseful(q) {
+      if (q.type==='yn') return q.year > lo && q.year <= hi;
+      if (q.type==='cl') return !(q.close < lo || q.open > hi);
+      if (q.type==='jn') return q.close >= lo && q.close < hi;
+      if (q.type==='mc') {
+        if (q.id==='iryo')  return lo < 1994 && hi >= 1951;
+        if (q.id==='sogou') return lo < 2021 && hi >= 1991;
+        if (q.id==='sap')   return lo < 2005 && hi >= 2003;
+      }
+      return true;
     }
 
-    function est() { return Math.min(NOW - 1, Math.max(1935, Math.round((lo + hi) / 2))); }
+    // --- 次の設問を選んで表示（回答後・スキップ後に呼ぶ）---
+    function nextQuestion() {
+      // 意味のない設問を読み飛ばす
+      while (remaining.length > 0 && !isUseful(remaining[0])) remaining.shift();
 
-    function showQ(q) {
-      hist.push({ q, queue: [...queue], answers: JSON.parse(JSON.stringify(answers)), lo, hi });
-      render(q, hist.length);
+      if (remaining.length === 0) { showResult(); return; }
+
+      // remainingから取り出してcurrentQにセット
+      currentQ = remaining.shift();
+      renderQ(currentQ, hist.length + 1);
     }
 
-    function next() {
-      if (!queue.length || answers.length >= MAX) { showResult(); return; }
-      const q = queue.shift();
-      showQ(q);
-    }
-
+    // --- 前の質問に戻る ---
     function goBack() {
-      if (hist.length <= 1) return;
-      hist.pop();
-      const s = hist.pop();
-      queue = [s.q, ...s.queue];
-      answers = s.answers;
-      lo = s.lo; hi = s.hi;
-      showQ(s.q);
+      if (hist.length === 0) return;
+
+      // 今表示中のcurrentQをremainingの先頭に戻す
+      if (currentQ !== null) remaining.unshift(currentQ);
+
+      // hist末尾を取り出して状態を復元
+      const prev = hist.pop();
+      lo = prev.lo;
+      hi = prev.hi;
+      answers = JSON.parse(JSON.stringify(prev.answers));
+
+      // 戻った設問をcurrentQにセットしてrenderQ（remainingには入れない）
+      currentQ = prev.q;
+      renderQ(currentQ, hist.length + 1);
     }
 
-    function skipQ() { next(); }
+    function skipQ() { nextQuestion(); }
 
+    // --- 回答を記録して次へ ---
+    function commitAnswer(label, tag, yes) {
+      answers.push({ label, tag, yes });
+      // 回答後の状態をhistに積む
+      hist.push({ q: currentQ, lo, hi, answers: JSON.parse(JSON.stringify(answers)) });
+      currentQ = null;
+      nextQuestion();
+    }
+
+    // --- 回答ハンドラ ---
+    function doYN(id, ex) {
+      applyYN(QM[id], ex);
+      commitAnswer(QM[id].name, ex ? 'あった' : 'なかった', ex);
+    }
+    function doCL(id, choice) {
+      const q = QM[id];
+      applyCL(q, choice);
+      const tagMap = { yes:'あった', before:q.before, after:q.after };
+      commitAnswer(q.name, tagMap[choice], choice==='yes');
+    }
+    function doJN(id, ex) {
+      applyJN(QM[id], ex);
+      commitAnswer(QM[id].name, ex ? 'あった' : 'すでに消滅していた', ex);
+    }
+    function doMC(id, sub) {
+      applyMC(id, sub);
+      const LABS = {
+        iryo:  { shimin:'「川口市民病院」があった（本町）', iryo:'「川口市立医療センター」があった', before:'市民病院はまだなかった' },
+        sogou: { kawa:'「川口そごう」があった', sogo:'「そごう川口店」があった', lara:'「ららテラス川口」があった', after:'閉店後・ららテラス前だった', before:'そごう自体なかった' },
+        sap:   { fac:'サッポロ工場があった', vac:'工場閉鎖後・アリオ前だった', ario:'アリオ川口があった' }
+      };
+      const LBL = { iryo:'市の病院', sogou:'駅前デパート', sap:'サッポロ工場跡地' };
+      const yes = !['after','before','vac'].includes(sub);
+      commitAnswer(LBL[id], LABS[id][sub], yes);
+    }
+
+    // --- 描画 ---
     function navHtml() {
-      const can = hist.length > 1;
       return `<div class="nav">
-        <button class="tbtn" onclick="goBack()" ${can ? '' : 'disabled'}>← 前の質問に戻る</button>
+        <button class="tbtn" onclick="goBack()" ${hist.length > 0 ? '' : 'disabled'}>← 前の質問に戻る</button>
         <button class="tbtn" onclick="skipQ()">わからない・スキップ</button>
       </div>`;
     }
 
-    function render(q, idx) {
-      const tot = Math.min(MAX, ORDER.length);
-      document.getElementById('pf').style.width = ((idx - 1) / tot * 100) + '%';
+    function renderQ(q, idx) {
+      document.getElementById('pf').style.width = Math.min(95, (hist.length / 10) * 100) + '%';
       let h = '';
 
       if (q.type === 'yn') {
         h = `<div class="card">
-          <div class="ql">質問 ${idx} / ${tot}</div>
-          <div class="qt">川口市に来た時に、</div>
+          <div class="ql">質問 ${idx}</div>
+          <div class="qt">川口市に来た時、</div>
           <div class="qn">「${q.name}」</div>
           <div class="qt">はありましたか？</div>
           <div class="qh">${q.hint}</div>
         </div>
         <div class="c2">
-          <button class="btn" onclick="doYN('${q.id}', true)">はい、ありました</button>
-          <button class="btn" onclick="doYN('${q.id}', false)">いいえ、ありませんでした</button>
+          <button class="btn" onclick="doYN('${q.id}',true)">はい、ありました</button>
+          <button class="btn" onclick="doYN('${q.id}',false)">いいえ、ありませんでした</button>
         </div>${navHtml()}`;
 
       } else if (q.type === 'cl') {
         h = `<div class="card">
-          <div class="ql">質問 ${idx} / ${tot}</div>
-          <div class="qt">川口市に来た時に、</div>
+          <div class="ql">質問 ${idx}</div>
+          <div class="qt">川口市に来た時、</div>
+          <div class="qn">「${q.name}」</div>
+          <div class="qt">はありましたか？</div>
+          <div class="qh">${q.hint}</div>
+        </div>
+        <div class="c1">
+          <button class="btn" onclick="doCL('${q.id}','yes')">はい、ありました</button>
+          <button class="btn" onclick="doCL('${q.id}','before')">${q.before}</button>
+          <button class="btn" onclick="doCL('${q.id}','after')">${q.after}</button>
+        </div>${navHtml()}`;
+
+      } else if (q.type === 'jn') {
+        h = `<div class="card">
+          <div class="ql">質問 ${idx}</div>
+          <div class="qt">川口市に来た時、</div>
           <div class="qn">「${q.name}」</div>
           <div class="qt">はありましたか？</div>
           <div class="qh">${q.hint}</div>
         </div>
         <div class="c2">
-          <button class="btn" onclick="doCL('${q.id}', true)">はい、ありました</button>
-          <button class="btn" onclick="doCL('${q.id}', false)">いいえ、ありませんでした</button>
+          <button class="btn" onclick="doJN('${q.id}',true)">はい、ありました</button>
+          <button class="btn" onclick="doJN('${q.id}',false)">いいえ、すでに消滅していました</button>
         </div>${navHtml()}`;
 
       } else if (q.id === 'iryo') {
         h = `<div class="card">
-          <div class="ql">質問 ${idx} / ${tot}</div>
-          <div class="qt">川口市に来た時の市の病院と言えば……</div>
-          <div class="note">「川口市民病院」（本町）：1951年～1994年5月 → 移転・改称し「川口市立医療センター」（新井宿）：1994年5月</div>
+          <div class="ql">質問 ${idx}</div>
+          <div class="qt">川口市に来た時、市の病院はどの状態でしたか？</div>
+          <div class="note">「川口市民病院」（本町）：1951年?1994年5月 → 移転・改称し「川口市立医療センター」（新井宿）：1994年5月?</div>
         </div>
         <div class="c1">
-          <button class="btn" onclick="doMC('iryo','shimin')">川口市民病院（本町）</button>
-          <button class="btn" onclick="doMC('iryo','iryo')">川口市立医療センター（新井宿）</button>
+          <button class="btn" onclick="doMC('iryo','shimin')">本町に「川口市民病院」があった</button>
+          <button class="btn" onclick="doMC('iryo','iryo')">新井宿に「川口市立医療センター」があった</button>
           <button class="btn" onclick="doMC('iryo','before')">市民病院自体がまだなかった</button>
         </div>${navHtml()}`;
 
       } else if (q.id === 'sogou') {
         h = `<div class="card">
-          <div class="ql">質問 ${idx} / ${tot}</div>
-          <div class="qt">川口市に来た時の川口駅前の大型デパートと言えば……</div>
+          <div class="ql">質問 ${idx}</div>
+          <div class="qt">川口市に来た時、川口駅前のデパート・商業施設はどの状態でしたか？</div>
           <div class="note">1991年10月「川口そごう」開店 → 2002年「そごう川口店」に改称 → 2021年2月閉店 → 2025年5月「ららテラス川口」開業</div>
         </div>
         <div class="c1">
-          <button class="btn" onclick="doMC('sogou','kawa')">川口そごう</button>
-          <button class="btn" onclick="doMC('sogou','sogo')">そごう川口</button>
-          <button class="btn" onclick="doMC('sogou','lara')">ららテラス川口</button>
-          <button class="btn" onclick="doMC('sogou','after')">閉店したデパートがあった</button>
-          <button class="btn" onclick="doMC('sogou','before')">デパートなんてなかった</button>
+          <button class="btn" onclick="doMC('sogou','kawa')">「川口そごう」という名前のデパートがあった</button>
+          <button class="btn" onclick="doMC('sogou','sogo')">「そごう川口店」という名前のデパートがあった</button>
+          <button class="btn" onclick="doMC('sogou','lara')">「ららテラス川口」があった</button>
+          <button class="btn" onclick="doMC('sogou','after')">デパートは閉店していて、ららテラスもまだなかった</button>
+          <button class="btn" onclick="doMC('sogou','before')">そごう自体がまだなかった</button>
         </div>${navHtml()}`;
 
       } else if (q.id === 'sap') {
         h = `<div class="card">
-          <div class="ql">質問 ${idx} / ${tot}</div>
-          <div class="qt">「リボンシティ」の場所って……</div>
-          <div class="note">サッポロビール埼玉工場：2003年9月閉鎖 → アリオ川口（跡地）：2005年11月開業</div>
+          <div class="ql">質問 ${idx}</div>
+          <div class="qt">川口市に来た時、サッポロビール工場・アリオ川口の場所はどの状態でしたか？</div>
+          <div class="note">サッポロビール埼玉工場：?2003年9月閉鎖 → アリオ川口（跡地）：2005年11月開業</div>
         </div>
         <div class="c1">
           <button class="btn" onclick="doMC('sap','fac')">サッポロビール工場があった</button>
-          <button class="btn" onclick="doMC('sap','vac')">何かの工事中だった</button>
+          <button class="btn" onclick="doMC('sap','vac')">工場は閉まっていて、アリオはまだなかった</button>
           <button class="btn" onclick="doMC('sap','ario')">アリオ川口があった</button>
         </div>${navHtml()}`;
       }
@@ -507,35 +322,13 @@
       document.getElementById('ct').innerHTML = h;
     }
 
-    function doYN(id, ex) {
-      const q = QM[id];
-      answers.push({ label: q.name, tag: ex ? 'あった' : 'なかった', yes: ex });
-      applyYN(q, ex); next();
-    }
-
-    function doCL(id, ex) {
-      const q = QM[id];
-      answers.push({ label: q.name, tag: ex ? 'あった' : 'なかった', yes: ex });
-      applyCL(q, ex); next();
-    }
-
-    function doMC(id, sub) {
-      const LABS = {
-        iryo:  { shimin: '川口市民病院（本町）', iryo: '川口市立医療センター（新井宿）', before: '病院なんてなかった' },
-        sogou: { kawa: '川口そごう', sogo: 'そごう川口があった', lara: 'ららテラス川口', after: '閉店後・ららテラス前だった', before: 'そごう自体なかった' },
-        sap:   { fac: 'サッポロ工場があった', vac: '何か工事中だった', ario: 'アリオ川口があった' }
-      };
-      const LBL = { iryo: '市の病院', sogou: '駅前デパート', sap: 'サッポロ工場跡地' };
-      const yes = !['after', 'before', 'vac'].includes(sub);
-      answers.push({ label: LBL[id], tag: LABS[id][sub], yes });
-      applyMC(id, sub); next();
-    }
-
+    // --- 結果表示 ---
     function showResult() {
+      currentQ = null;
       document.getElementById('pf').style.width = '100%';
       const arr = est(), yrs = NOW - arr;
       const rows = answers.map(a =>
-        `<div class="evr"><span>${a.label}</span><span class="${a.yes ? 'ty' : 'tn'}">${a.yes ? '' : ''} ${a.tag}</span></div>`
+        `<div class="evr"><span>${a.label}</span><span class="${a.yes?'ty':'tn'}">${a.tag}</span></div>`
       ).join('');
 
       document.getElementById('ct').innerHTML = `
@@ -568,31 +361,35 @@
     function submitRating() {
       const s1 = +document.getElementById('s1').value;
       const s2 = +document.getElementById('s2').value;
-      const m1 = s1 >= 8 ? '精度が高くて嬉しいです！' : s1 >= 5 ? '参考にして改善します！' : 'ご意見ありがとうございます、改善します！';
-      const m2 = s2 >= 8 ? '楽しんでいただけて嬉しいです！' : s2 >= 5 ? 'もっと面白くなるよう改善します！' : 'ご意見ありがとうございます！';
-      document.getElementById('ratingArea').innerHTML = `<div class="rating-done">
-        <div class="rating-scores">
-          <div class="score-badge"><div class="sv">${s1}/10</div><div class="sl">正確さ</div></div>
-          <div class="score-badge"><div class="sv">${s2}/10</div><div class="sl">面白さ</div></div>
-        </div>
-        <div class="rating-done-msg">${m1}<br>${m2}</div>
-      </div>`;
+      const m1 = s1>=8 ? '精度が高くて嬉しいです！' : s1>=5 ? '参考にして改善します！' : 'ご意見ありがとうございます、改善します！';
+      const m2 = s2>=8 ? '楽しんでいただけて嬉しいです！' : s2>=5 ? 'もっと面白くなるよう改善します！' : 'ご意見ありがとうございます！';
+      document.getElementById('ratingArea').innerHTML = `
+        <div class="rating-done">
+          <div class="rating-scores">
+            <div class="score-badge"><div class="sv">${s1}/10</div><div class="sl">正確さ</div></div>
+            <div class="score-badge"><div class="sv">${s2}/10</div><div class="sl">面白さ</div></div>
+          </div>
+          <div class="rating-done-msg">${m1}<br>${m2}</div>
+        </div>`;
     }
 
     function goBackResult() {
-      if (!hist.length) return;
-      const s = hist.pop();
-      queue = [s.q, ...s.queue];
-      answers = s.answers; lo = s.lo; hi = s.hi;
-      showQ(s.q);
+      if (hist.length === 0) return;
+      const prev = hist.pop();
+      lo = prev.lo;
+      hi = prev.hi;
+      answers = JSON.parse(JSON.stringify(prev.answers));
+      currentQ = prev.q;
+      renderQ(currentQ, hist.length + 1);
     }
 
     function restart() {
       hist = [];
-      queue = ORDER.map(id => QM[id]).filter(Boolean);
-      answers = []; lo = 1935; hi = NOW - 1;
+      remaining = ORDER.map(id => QM[id]).filter(Boolean);
+      currentQ = null;
+      lo = 1935; hi = NOW - 1; answers = [];
       document.getElementById('pf').style.width = '0%';
-      next();
+      nextQuestion();
     }
 
     restart();
